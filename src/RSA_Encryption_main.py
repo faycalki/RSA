@@ -24,6 +24,7 @@ import RSA_Encryption_backend
 # Fast processing settings (not secure, edit them to be secure, the higher the coprimes_to_check_against the more likely the primes are in fact prime, the higher slicer_value is the less secure the encryption is)
 coprimes_to_check_against = 5
 slicer_value = 100
+unicode_numeral = 1
 
 
 def operate(coprimes_to_check_against, slicer_value):
@@ -34,17 +35,39 @@ def operate(coprimes_to_check_against, slicer_value):
         debug = 1
     else:
         debug = 0
-    unicode_numeral = input(
-        "if what you want to encrypt is already in the form of unicode numerals input 0, otherwise hit enter: "
-    )
-    if unicode_numeral == "0":
-        unicode_numeral = 0
-    else:
-        unicode_numeral = 1
+    # unicode_numeral = input(
+    #    "if what you want to encrypt is already in the form of unicode numerals input 0, otherwise hit enter: "
+    # )
+    # if unicode_numeral == "0":
+    #    unicode_numeral = 0
+    # else:
+    #    unicode_numeral = 1
     choose_type_of_input = input(
-        "If you wish to encrypt or decrypt a file input 1, if you wish to encrypt or decrypt a string instead (message), leave blank and hit enter: "
+        "To encrypt a file input 1.\nTo encrypt a message input 2\nTo decrypt a file input 3\nTo decrypt a message input 4.\nInput: "
     )
-    choose_program = input("Input e for the encoder or d for the decoder: ")
+    if choose_type_of_input != "1" and choose_type_of_input != "2":
+        if choose_type_of_input != "3" and choose_type_of_input != "4":
+            operate(coprimes_to_check_against, slicer_value)
+        else:
+            if choose_type_of_input == "3":
+                choose_program = "d"
+                choose_type_of_input = "1"
+            elif choose_type_of_input == "4":
+                choose_program = "d"
+                choose_type_of_input == ""
+    elif choose_type_of_input == "1":
+        choose_program = "e"
+    elif choose_type_of_input == "2":
+        choose_program = "e"
+    else:
+        operate(coprimes_to_check_against, slicer_value)
+
+    # choose_program = input("Input e for the encoder or d for the decoder: ")
+    #
+    # choose_type_of_input = input(
+    #    "If you wish to encrypt or decrypt a file input 1, if you wish to encrypt or decrypt a string instead (message), press enter: "
+    # )
+    # choose_program = input("Input e for the encoder or d for the decoder: ")
 
     if choose_program == "e":
         primes_upper_bound_string = input(
@@ -101,6 +124,7 @@ def operate(coprimes_to_check_against, slicer_value):
                 (
                     string_to_be_encoded,
                     unicode_of_string,
+                    unicode_of_string_length,
                 ) = RSA_Encryption_backend.unicode_numeral(string_to_be_encoded, debug)
             # Encoding the string, returns encoded_message.
             # Arguments: numeral_string, N, E, debug enabled (1 on, 0 off)
@@ -139,6 +163,7 @@ def operate(coprimes_to_check_against, slicer_value):
                 file_name,
                 choose_program,
                 decoder_key,
+                unicode_of_string_length,
             )
     # joined_unicode_of_string
     elif choose_program == "d":
@@ -179,6 +204,9 @@ def operate(coprimes_to_check_against, slicer_value):
         except ValueError:
             print("Plug in an integer value next time.")
             operate(coprimes_to_check_against, slicer_value)
+        unicode_of_string_length = input(
+            "Input the unicode decoder list, make sure it is exactly as provided in the keys.txt file: "
+        )
 
         decoded_list = RSA_Encryption_backend.decoder(
             N,
@@ -188,6 +216,10 @@ def operate(coprimes_to_check_against, slicer_value):
             list_of_primes,
             debug,
         )
+
+        # Take the decoded list to the inverse thing...
+
+        # Return the proper file.
 
         #   Placeholders until I figure out how to pass optional arguments instead of mandatory
         unencrypted_string = "placeholder"
@@ -213,6 +245,7 @@ def operate(coprimes_to_check_against, slicer_value):
             file_name,
             choose_program,
             decoder_key,
+            unicode_of_string_length,
         )
 
     operate(coprimes_to_check_against, slicer_value)

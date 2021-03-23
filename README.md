@@ -12,7 +12,7 @@ Python Interpreter 3+ is required in order to compile the code, you may build th
 Standard compilation is all that is needed.
 
 ```shell
-python RSA_Encryption_interface.py
+python RSA_Encryption_main.py
 ```
 
 Once the code is executed, follow the instructions on the screen.

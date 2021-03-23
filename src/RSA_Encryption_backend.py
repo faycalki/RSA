@@ -1,8 +1,8 @@
 from Modules import (
-    primality_tester_modular,
+    primality_tester_impl,
 )  # Function: primality_tester, arguments: detail, prime_number_to_check, coprimes_to_check_against
 from Modules import (
-    euclidean_algorithm_for_two_or_more_numbers_modular,
+    euclidean_algorithm_for_two_or_more_numbers_impl,
 )  # Function: modular_euclidean_algorithm, arguments: discrete number of integers to check the hcf of, 1, first_factor_value, second_factor_value
 import random
 
@@ -30,7 +30,7 @@ def generate_keys(
 
     def check_if_prime(candidate):
         if (
-            primality_tester_modular.primality_tester(
+            primality_tester_impl.primality_tester(
                 "-1", candidate, coprime_integers_to_check_against
             )
             == "is prime"
@@ -63,7 +63,7 @@ def generate_keys(
         for coprime_search in range(((prime_1 - 1) * (prime_2 - 1)) // slicer, 2, -1):
             (
                 hcf_and_lcm_list
-            ) = euclidean_algorithm_for_two_or_more_numbers_modular.modular_euclidean_algorithm(
+            ) = euclidean_algorithm_for_two_or_more_numbers_impl.modular_euclidean_algorithm(
                 2, 1, (prime_1 - 1) * (prime_2 - 1), coprime_search
             )
             if hcf_and_lcm_list[0] == 1:
@@ -88,25 +88,126 @@ def unicode_numeral(string, debug):
             "DEBUG: Unicode numeral representation of all the string characters is: %s"
             % unicode_of_string
         )
+    unicode_of_string_length = []
+    __count_length = 0
+    for element in unicode_of_string:
+        unicode_of_string_length.append(len(str(unicode_of_string[__count_length])))
+        __count_length += 1
+    if debug == 1:
+        print(
+            "DEBUG: Length of each character's unicode numeral representation: %s"
+            % unicode_of_string_length
+        )
     joining_unicode_of_string = [str(int) for int in unicode_of_string]
-    return "".join(joining_unicode_of_string), unicode_of_string
+    return (
+        "".join(joining_unicode_of_string),
+        unicode_of_string,
+        unicode_of_string_length,
+    )
 
 
-def inverse_unicode_numeral(string, debug):
+def inverse_unicode_numeral(string, debug, length_of_unicode_characters):
     # This function deconverts from Unicode Numerals
+    unicode_of_string_inverse_organized = []
     if debug == 1:
         print("String passed to inverse unicode numeral representation %s:" % string)
     unicode_of_string_inverse = []
-    for character in string:
-        number_of_char = chr(int(character))
-        unicode_of_string_inverse.append(number_of_char)
-    if debug == 1:
-        print(
-            "DEBUG: Inverse unicode numeral representation of all the string characters is: %s"
-            % unicode_of_string_inverse
-        )
-    joining_unicode_of_string_inverse = [str(int) for int in unicode_of_string_inverse]
-    return "".join(joining_unicode_of_string_inverse)
+    if length_of_unicode_characters == 0:
+        for character in string:
+            number_of_char = chr(int(character))
+            unicode_of_string_inverse.append(number_of_char)
+        if debug == 1:
+            print(
+                "DEBUG: Inverse unicode numeral representation of all the string characters is: %s"
+                % unicode_of_string_inverse
+            )
+    else:
+        string = str(string)[1:-1]  # Remove the []
+        string = string.split(",")  # Split at each comma
+        string = list(map(int, string))  # Map the string to integer
+        string_c = string  # To append later
+        string = [
+            "{:06d}".format(item) for item in string[:-1]
+        ]  # Not including last element since we don't wanna append 0's to that one
+        string.append(str(string_c[-1]))  # Re adding last element
+        if debug == 1:
+            print("New string with padded 0's %s" % string)
+            print("Debug 1: %s" % string)
+        string = str(string)[1:-1]
+        string = string.replace("'", "")
+        string = string.replace(",", "")
+        string = string.replace(" ", "")
+        if debug == 1:
+            print("Debug 2: %s" % string)
+
+        # length_of_unicode_characters = str(length_of_unicode_characters)[1:-1]
+        length_of_unicode_characters = [
+            int(s) for s in length_of_unicode_characters.split(",")
+        ]
+        if debug == 1:
+            print("Length of unicode characters: %s" % length_of_unicode_characters)
+        for i in range(len(length_of_unicode_characters)):
+            a, string = (
+                string[: length_of_unicode_characters[0]],
+                string[length_of_unicode_characters[0] :],
+            )
+
+            unicode_of_string_inverse_organized.append(a)
+            del length_of_unicode_characters[0]
+        print(unicode_of_string_inverse_organized)
+        for character in unicode_of_string_inverse_organized:
+            number_of_char = chr(int(character))
+            unicode_of_string_inverse.append(number_of_char)
+        if debug == 1:
+            print(
+                "DEBUG: Inverse unicode numeral representation of all the string characters is: %s"
+                % unicode_of_string_inverse
+            )
+        joining_unicode_of_string_inverse = [
+            str(int) for int in unicode_of_string_inverse
+        ]
+        return "".join(joining_unicode_of_string_inverse)
+
+    #    string = str(string)[1:-1]  # Remove the []
+    #    string = string.split(",")  # Split at each comma
+    #    string = list(map(int, string))  # Map the string to integers
+
+
+#
+#    string_c = string  # To append later
+#    string = [
+#        "{:06d}".format(item) for item in string[:-1]
+#    ]  # Not including last element since we don't wanna append 0's to that one
+#    string.append(string_c[-1])  # Re adding last element
+#    print("New string with padded 0's %s" % string)
+#
+#    # string = "".join(str(string))
+#    # string = string.replace(",", "")
+#    # string = string.replace(" ", "")
+#    # string = str(string)
+#    length_of_unicode_characters = [
+#        int(s) for s in length_of_unicode_characters.split(",")
+#    ]
+#    print(string)
+#    print("Length of unicode characters: %s" % length_of_unicode_characters)
+#    for i in range(len(length_of_unicode_characters)):
+#        a, string = (
+#            string[: length_of_unicode_characters[0]],
+#            string[length_of_unicode_characters[0] :],
+#        )
+#        unicode_of_string_inverse_organized.append(a)
+#        del length_of_unicode_characters[0]
+#    print(unicode_of_string_inverse_organized)
+#    for character in unicode_of_string_inverse_organized:
+#        number_of_char = chr(int(character))
+#        unicode_of_string_inverse.append(number_of_char)
+#    if debug == 1:
+#        print(
+#            "DEBUG: Inverse unicode numeral representation of all the string characters is: %s"
+#            % unicode_of_string_inverse
+#        )
+# joining_unicode_of_string_inverse = [str(int) for int in unicode_of_string_inverse]
+# return "".join(joining_unicode_of_string_inverse)
 
 
 def encoder(message, N, e, debug):
@@ -136,8 +237,8 @@ def encoder(message, N, e, debug):
     for element in unicode_of_string_split:
         element = int(element)
         encoded_element = (element ** e) % N
-        if debug == 1:
-            print("%d encoded as %d" % (element, encoded_element))
+        # if debug == 1:
+        print("%d encoded as %d" % (element, encoded_element))
         unicode_of_encoded_string.append(encoded_element)
 
     return unicode_of_encoded_string
@@ -152,11 +253,11 @@ def decoder(N, e, decoder_key, encoded_message, list_of_primes, debug):
             s,
             decoder_key,
             hcf,
-        ) = euclidean_algorithm_for_two_or_more_numbers_modular.bezouts_identity(
+        ) = euclidean_algorithm_for_two_or_more_numbers_impl.bezouts_identity(
             (list_of_primes[0] - 1) * (list_of_primes[1] - 1), e
         )
         if decoder_key < 0:
-            decoder_key = euclidean_algorithm_for_two_or_more_numbers_modular.bezouts_identity_positive(
+            decoder_key = euclidean_algorithm_for_two_or_more_numbers_impl.bezouts_identity_positive(
                 decoder_key, (list_of_primes[0] - 1) * (list_of_primes[1] - 1), e
             )
             if debug == 1:
@@ -173,12 +274,11 @@ def decoder(N, e, decoder_key, encoded_message, list_of_primes, debug):
         encoded_message = encoded_message.split(",")  # Necessary to remove the commas
         while naive_count < len(encoded_message):
             decoded_piece = (int(encoded_message[naive_count]) ** decoder_key) % N
-            if debug == 1:
-                # print("Decoder key: %d\nN value: %d" % (decoder_key, N))
-                print(
-                    "%d decoded as: %d"
-                    % (int(encoded_message[naive_count]), decoded_piece)
-                )
+            # if debug == 1:
+            # print("Decoder key: %d\nN value: %d" % (decoder_key, N))
+            print(
+                "%d decoded as %d" % (int(encoded_message[naive_count]), decoded_piece)
+            )
             decoded_list.append(decoded_piece)
             naive_count += 1
         return decoded_list
@@ -212,6 +312,7 @@ def write_to_file(
     file_name,
     encode_or_decode,
     decoder_key,
+    unicode_of_string_length,
 ):
 
     f = open("keys.txt", "w")
@@ -230,32 +331,50 @@ def write_to_file(
     # Keys and message
     if encode_or_decode == "e":
         f.write(
-            "Public keys: %s\nPrivate keys: %s\nDecryption key: %s\n"
+            "Public keys: %s\nPrivate keys: %s\nDecryption key: %s\nUnicode decryption list: %s\n"
             % (
                 pubkey,
                 privkey,
                 decoder_key,
+                str(unicode_of_string_length)[1:-1],
             )
         )
+
     elif encode_or_decode == "d":
         f.write(
-            "Public keys: %s\nDecryption key: %s\n"
+            "Public keys: %s\nDecryption key: %s\nUnicode decryption list: %s\n"
             % (
                 pubkey,
                 decoder_key,
+                unicode_of_string_length,
             )
         )
 
     if is_file != "1":
-        f.write(
-            "Encoded message associated with the above keys: %s\nUncrypted message associated with the above keys: %s \n"
-            % (str(encoded_message)[1:-1], unencrypted_message)
-        )
-        # To do: figure out how to find the proper unicode numeral representation for the decrypted data set when decrypting (not encrypting), might not be possible though, the main issue is that the decrypted files are hard to guess what their unicode representation would be for each letter.
+        if encode_or_decode == "e":
+            f.write(
+                "Encoded message associated with the above keys: %s\nUncrypted message associated with the above keys: %s \n"
+                % (str(encoded_message)[1:-1], unencrypted_message)
+            )
+        elif encode_or_decode == "d":
+            f.write(
+                "Encoded message associated with the above keys: %s\nDecrypted message associated with the above keys: %s \n"
+                % (encoded_message, unicode_of_string)
+            )
+
         if encode_or_decode == "e":
             if unicode_numeral_message == 1:
                 inverse_unicode_string = inverse_unicode_numeral(
-                    unicode_of_string, debug
+                    unicode_of_string, debug, 0
+                )
+                f.write(
+                    "Decrypted message in character unicode form: %s"
+                    % inverse_unicode_string
+                )
+        elif encode_or_decode == "d":
+            if unicode_numeral_message == 1:
+                inverse_unicode_string = inverse_unicode_numeral(
+                    unicode_of_string, debug, unicode_of_string_length
                 )
                 f.write(
                     "Decrypted message in character unicode form: %s"
@@ -264,10 +383,20 @@ def write_to_file(
     else:
         if encode_or_decode == "e":
             file_name_appended = "".join(("encrypted_", file_name))
+            file_acquired = open(file_name_appended, "w")
+            file_acquired.write(str(encoded_message)[1:-1])
         elif encode_or_decode == "d":
-            file_name_appended = "".join(("decrypted_", file_name))
-        file_acquired = open(file_name_appended, "w")
-        file_acquired.write(str(encoded_message)[1:-1])
+            if unicode_numeral_message == 1:
+                inverse_unicode_string = inverse_unicode_numeral(
+                    unicode_of_string, debug, unicode_of_string_length
+                )
+                file_name_appended = "".join(("decrypted_", file_name))
+                file_acquired = open(file_name_appended, "w")
+                file_acquired.write(str(inverse_unicode_string))
+            else:
+                file_name_appended = "".join(("decrypted_", file_name))
+                file_acquired = open(file_name_appended, "w")
+                file_acquired.write(str(unicode_of_string))
         file_acquired.close()
 
     # Close files
