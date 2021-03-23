@@ -1,8 +1,8 @@
-![Logo of the project](https://i.imgur.com/roj9D40.png)
+![Logo of the project](https://i.imgur.com/RXxvoqq.png)
 
 # RSA Encryption and Decryption program.
 
-This modular program provides you with the option to encrypt or decrypt files or mere strings of data using RSA methods, also provides unicode numeral representation support for the encoded and decoded data. Furthermore, it provides full customization of the amount of digits of primes to encrypt and decrypt with, and saves your data for you if requested.
+This modular program provides you with the option to encrypt or decrypt files or mere strings of data using RSA encryption and decryption, also provides unicode numeral representation support for the encoded and decoded data. Furthermore, it provides full customization of the amount of digits of primes to encrypt and decrypt with, and saves your data for you if requested.
 
 This program uses the modular functionalities of some of my other algorithms in order to make them all work together in such a way that we are able to achieve our main goal of RSA encryption and decryption at will.
 
