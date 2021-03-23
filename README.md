@@ -1,4 +1,4 @@
-![Logo of the project](https://i.imgur.com/RXxvoqq.png)
+![Logo of the project](https://i.imgur.com/vt4lx3U.png)
 
 # RSA Encryption and Decryption program.
 
