@@ -168,47 +168,6 @@ def inverse_unicode_numeral(string, debug, length_of_unicode_characters):
         ]
         return "".join(joining_unicode_of_string_inverse)
 
-    #    string = str(string)[1:-1]  # Remove the []
-    #    string = string.split(",")  # Split at each comma
-    #    string = list(map(int, string))  # Map the string to integers
-
-
-#
-#    string_c = string  # To append later
-#    string = [
-#        "{:06d}".format(item) for item in string[:-1]
-#    ]  # Not including last element since we don't wanna append 0's to that one
-#    string.append(string_c[-1])  # Re adding last element
-#    print("New string with padded 0's %s" % string)
-#
-#    # string = "".join(str(string))
-#    # string = string.replace(",", "")
-#    # string = string.replace(" ", "")
-#    # string = str(string)
-#    length_of_unicode_characters = [
-#        int(s) for s in length_of_unicode_characters.split(",")
-#    ]
-#    print(string)
-#    print("Length of unicode characters: %s" % length_of_unicode_characters)
-#    for i in range(len(length_of_unicode_characters)):
-#        a, string = (
-#            string[: length_of_unicode_characters[0]],
-#            string[length_of_unicode_characters[0] :],
-#        )
-#        unicode_of_string_inverse_organized.append(a)
-#        del length_of_unicode_characters[0]
-#    print(unicode_of_string_inverse_organized)
-#    for character in unicode_of_string_inverse_organized:
-#        number_of_char = chr(int(character))
-#        unicode_of_string_inverse.append(number_of_char)
-#    if debug == 1:
-#        print(
-#            "DEBUG: Inverse unicode numeral representation of all the string characters is: %s"
-#            % unicode_of_string_inverse
-#        )
-# joining_unicode_of_string_inverse = [str(int) for int in unicode_of_string_inverse]
-# return "".join(joining_unicode_of_string_inverse)
-
 
 def encoder(message, N, e, debug):
     unicode_of_encoded_string = []

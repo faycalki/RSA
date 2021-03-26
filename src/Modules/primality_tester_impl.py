@@ -112,8 +112,8 @@ def primality_tester(details, prime_to_check, coprimes_to_test_against):
                 if not n in list_of_found_primes:
                     list_of_found_primes.append(n)
             else:
-                return "is prime"
+                return "is prime"  # Recommendation by Zork: return a true/false value instead of this.
         elif g == "not prime" and details == "-1":
-            return "is not prime"
+            return "is not prime"  # Recommendation by Zork: return a true/false value instead of this.
     else:
         DisplayError(1, n)
